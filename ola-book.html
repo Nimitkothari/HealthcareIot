@@ -1,0 +1,89 @@
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+
+
+<dom-module id="ola-book">
+  <style>
+  </style>
+  <template>
+    <div id="div1">
+      <px-card></px-card>
+    <table>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Maria Anders</td>
+        <td>Germany</td>
+      </tr>
+
+    </div>
+    </table>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ola-book',
+      properties: {},
+
+      ready: function(){}
+
+    });
+  </script>
+</dom-module> -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/px-datetime-picker/px-datetime-picker.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+
+
+
+<dom-module id="ola-book">
+  <style>
+  </style>
+  <template>
+    <px-card id="myCard">
+      <!-- <style is="custom-style">
+        div.markdown-html > h2 {
+          margin-top: 0;
+        }
+      </style>-->
+      <table>
+        <tr>
+          <td><paper-input label="Enter Source"></paper-input></td>
+          <td><paper-input label="Enter Destination"></paper-input></td>
+          <td><paper-dialog><h3>Ride Availability</h3></paper-dialog></td>
+          <td><h4>{status}</h4></td>
+        </tr>
+        <tr>
+          <td><px-datetime-picker block-past-dates="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss"
+            time-zone="UTC" show-time-zone="abbreviatedText" date-time="2017-08-10T17:36:51.000Z"></px-datetime-picker></td>
+            <td><paper-dialog><h3>Ride Estimate</h3></paper-dialog></td>
+            <td><h4>{status}</h4></td>
+            <td> <px-dropdown items='[{"key":"1","val":"Micro"},{"key":"2","val":"Mini"},{"key":"3","val":"Suv"},
+              {"key":"4","val":"Sedan"}]'
+               sort-mode="key" button-style="default" display-value="Select" disable-clear></px-dropdown></td>
+        </tr>
+        <br>
+        <tr>
+        <paper-button>
+        <px-modal btn-modal-positive="Submit" btn-modal-negative="Cancel" modal-heading="Confirm Booking">
+        <button class='btn btn--primary modal-trigger'>Book</button><p>This will confirm your booking.
+        But it may vary accordingly</p>
+        </px-modal>
+        </paper-button>
+        </tr>
+      </table>
+    </px-card>
+  </template>
+  <script>
+    Polymer({
+      is: 'ola-book',
+      properties: {},
+      ready: function() {}
+    });
+  </script>
+</dom-module>
