@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+
+
+<dom-module id="my-stats-view">
+	<style>
+	</style>
+<template is="dom-repeat" items="[[repos]]">-->
+	<!--<template is="statistics">-->
+<span>
+{{item.name}}
+</span>
+		
+	
+
+<iron-ajax
+		id="requestRepos"
+		url="https://devapi.olacabs.com/v1/products?pickup_lat=12.9491416&pickup_lng=77.64298&category=mini"
+		headers={{config}}
+		handle-as="json"
+		on-response="handleResponse">
+		</iron-ajax>
+</template>
+<script>
+Polymer({
+      is: 'my-stats-view',
+		
+      properties: {
+		  repos: {
+			  type: Array
+		  }
+	  },
+      ready: function() {
+		  this.config={
+			
+			  'X-APP-TOKEN': 'fb381ce8f6a44740972d0642aa9b367a', 
+			  'Content-Type':'application/json'
+			   
+		  }
+		  this.$.requestRepos.generateRequest();
+	  },
+	handleResponse: function(data) {
+		this.repos = data.detail.__data__.response;
+		console.log(this.repos);
+	}
+
+	});
+</script>
+	
+</dom-module>
+
