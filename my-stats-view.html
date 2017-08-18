@@ -1,52 +1,243 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/px-vis-pie-chart/px-vis-pie-chart.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/px-simple-horizontal-bar-chart/px-simple-horizontal-bar-chart.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
 
 
 
 <dom-module id="my-stats-view">
-	<style>
-	</style>
-<template is="dom-repeat" items="[[repos]]">-->
-	<!--<template is="statistics">-->
-<span>
-{{item.name}}
-</span>
-		
-	
+	<style is="custom-style">
+		/*px-card{
+						
+			--px-card-header-size:100px;			
+			
+			
 
-<iron-ajax
+		}*/
+	</style>
+<!--<template is="dom-repeat" items="[[repos]]">-->
+<template is="statistics" >
+<!--<span>
+{{item.name}}
+</span>-->
+	
+<px-card header-text="Your Yearly Medical Expenditure">
+	<div id="div1">
+	<!--	<px-vis-pie-chart
+			prevent-resize
+			width="200"
+			height="200"
+			chart-horizontal-alignment="left"
+			chart-vertical-alignment="left"
+			margin='{"top":"10","bottom":"10","left":"0","right":"0"}'
+			register-config='{"type":"vertical","width":200}'
+			chart-data='{{pieData}}'
+			series-config='{"mySerie":{"xAxisUnit":"pints","y":"y","x":"x"}}'
+			inner-radius="0"
+			title="Total"
+			title-spacing="5"
+			decimal-percentage="0"
+			max-registers="0">
+
+		</px-vis-pie-chart>-->
+			<px-dropdown id="dropdown"
+
+			items='[{"key":"1","val":"January"},
+				   {"key":"2","val":"February"},
+				   {"key":"3","val":"March"},
+				   {"key":"4","val":"April"},
+				   {"key":"5","val":"May"},
+				   {"key":"6","val":"June"},
+				   {"key":"7","val":"July"},
+				   {"key":"8","val":"August"},
+				   {"key":"9","val":"September"},
+				   {"key":"10","val":"October"},
+				   {"key":"11","val":"November"},
+				   {"key":"12","val":"December"}]'
+			sort-mode="key"
+			button-style="default"
+			display-value="Select"
+			disable-clear			 >
+			</px-dropdown>
+		
+		
+			<px-simple-horizontal-bar-chart
+					id="barChart"
+					width="1000"
+					height="200"
+					bar-labels="values"
+					legend-labels='["Medicine","Consultation","Medical Reports"]'
+					chart-data="[[horData]]">
+			</px-simple-horizontal-bar-chart>
+		</div>
+	<!--dynamic-menu-config='[{"name":"Log message","action":"function(data) {console.log(\"logging message\")}","eventName":"delete","icon":"px-vis:trash-series"}]'	
+	
+<!--	<iron-ajax
 		id="requestRepos"
 		url="https://devapi.olacabs.com/v1/products?pickup_lat=12.9491416&pickup_lng=77.64298&category=mini"
 		headers={{config}}
 		handle-as="json"
 		on-response="handleResponse">
-		</iron-ajax>
+		</iron-ajax>-->
+	
+	</px-card>
+		
 </template>
 <script>
 Polymer({
-      is: 'my-stats-view',
+	listeners:{
+		'px-dropdown-selection-changed':'DropChange'
+	},
+    is: 'my-stats-view',
 		
       properties: {
-		  repos: {
-			  type: Array
+		  pieData:{
+			  type: String
+		  },
+		  clickVal:{
+			  type: String
 		  }
+		  /*repos: {
+			  type: Array
+		  }*/
 	  },
       ready: function() {
-		  this.config={
+			this.horData=[]
+	},
+	 DropChange:function(e) {
+		 var Data2=[
+				{
+				medicine:"200",
+				consultation:"500",
+				medicalReports:"1000"
+				},
+				{
+				medicine:"4",
+				consultation:"4",
+				medicalReports:"6"
+				},
+			 	{
+				medicine:"7",
+				consultation:"8",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				},
+			 	{
+				medicine:"6",
+				consultation:"6",
+				medicalReports:"4"
+				}
+		 		]
+		   	var selectedKey;
+		    selectedKey = e.detail.key;
+			console.log(selectedKey)	
 			
-			  'X-APP-TOKEN': 'fb381ce8f6a44740972d0642aa9b367a', 
-			  'Content-Type':'application/json'
-			   
-		  }
-		  this.$.requestRepos.generateRequest();
-	  },
-	handleResponse: function(data) {
-		this.repos = data.detail.__data__.response;
-		console.log(this.repos);
-	}
-
-	});
+			if(selectedKey == "1"){
+				var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports];                 	
+			}
+			else if(selectedKey == "2"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "3"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "4") {
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+		 	else if(selectedKey == "5"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "6"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "7") {
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+		 	else if(selectedKey == "8"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "9"){
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+			 else if(selectedKey == "10") {
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+		 	else if(selectedKey == "11") {
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+		 	else
+		 		{
+					var data= selectedKey-1;
+				var tempData=Data2[data]
+				this.horData=[tempData.medicine,tempData.consultation,tempData.medicalReports]; 
+				}
+		 }
+		 
+});
 </script>
 	
 </dom-module>

@@ -1,0 +1,154 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/px-datetime-picker/px-datetime-picker.html">
+<link rel="import" href="../../bower_components/px-datetime-common/px-datetime-imports.html"> 
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+
+<dom-module id="doctor-details">
+	
+	<style>
+		
+	</style>
+	<template>
+		
+		<px-card style="background-color:white">
+		<paper-input id="pi" label="Enter Your Location"></paper-input>
+		<br>
+		
+		<px-data-table id="mytable" language="en" filterable="true"  selectable="true" single-select="true" checked="checked" striped="true"				
+					table-data="{{mydata}}"  >
+			<px-data-table-column id="DoctorName"  name="DoctorName" label="Name" ></px-data-table-column>
+			<px-data-table-column id="ClinicName"  name="ClinicName" label="ClinicName" ></px-data-table-column>
+			<px-data-table-column id="Location"  name="Location" label="Location" ></px-data-table-column>
+			<px-data-table-column id="Distance"  name="Distance" label="Distance" ></px-data-table-column>
+			<px-data-table-column id="AvgWaitingTime"  name="Avg Waiting Time" label="Avg Waiting Time" ></px-data-table-column>
+			<px-data-table-column id="Cost"  name="Cost"  label="Cost"></px-data-table-column>
+			<px-data-table-column id="DateTime" type="html" name="Date & Time" label="Apointment"></px-data-table-column>
+			<px-data-table-column id="BookAppointment" type="html" name="Book" label="Book Apointment"></px-data-table-column>
+		
+	    </px-data-table>
+		
+		</px-card>
+	</template>
+	<script>
+	Polymer({
+		listeners:{
+		'px-row-click':'onRowClick'
+	},
+      is: 'doctor-details',
+		
+      properties: {
+		  
+		  mydata:{
+			  type: String
+		  },
+		  stLoc:{
+			  type: String
+		  }
+	  },
+      ready: function() {
+		  //this.$.myironman.generateRequest();
+		  //window.alert("hello my page");
+	/*	this.mydata=[{"Hospital":"Hosp1","Location":"Thane","Distance":"2km","Avg Waiting Time":"2hrs","Cost":"100$"},{"Hospital":"Hosp2","Location":"Airoli","Distance":"3km","Avg Waiting Time":"2hrs","Cost":"150$"},{"Hospital":"Hosp3","Location":"vikroli","Distance":"4km","Avg Waiting Time":"3hrs","Cost":"200$"},{"Hospital":"Hosp4","Location":"Mulund","Distance":"5km","Avg Waiting Time":"4hrs","Cost":"300$"},{"Hospital":"Hosp5","Location":"Rabale","Distance":"6km","Avg Waiting Time":"5hrs","Cost":"400$"}];*/
+		  var data =[{
+			  "DoctorName":"Parul shah",
+			  "ClinicName":"Thane Health Care Hospital",
+			  "Location":"Thane",
+			  "Distance":"2km",
+			  "Avg Waiting Time":"2hrs",
+			  "Cost":"100$",
+			  "Book":this._getIncidentHtml(),
+			   "Date & Time":this._getDateHtml()
+		    },
+			{
+			  "DoctorName":"kunal kulkarni",
+			  "ClinicName":"Manav Kalyan Hospital",
+			  "Location":"Bhayandar",
+			  "Distance":"22km",
+			  "Avg Waiting Time":"2hrs",
+			  "Cost":"700$",
+			  "Date & Time":this._getDateHtml(),
+			  "Book":this._getIncidentHtml()
+		    },
+			{
+			  "DoctorName":"Alpa shah",
+			  "ClinicName":"Kalyan Hospital",
+			  "Location":"kalyan",
+			  "Distance":"13km",
+			  "Avg Waiting Time":"2hrs",
+			  "Cost":"600$",
+			  "Date & Time":this._getDateHtml(),
+			  "Book":this._getIncidentHtml()
+		    },
+			{
+				"DoctorName":"Vikram Rathod",
+				"ClinicName":"Hira Mongi Navneet Hospital",
+				"Location":"Mulund",
+				"Distance":"5km",
+				"Avg Waiting Time":"4hrs",
+				"Cost":"300$",
+				"Date & Time":this._getDateHtml(),
+				"Book":this._getIncidentHtml()
+			},
+			{
+				"DoctorName":"Manish parulekar",
+				"ClinicName":"Parulekar Hospital",
+				"Location":"Rabale",
+				"Distance":"6km",
+				"Avg Waiting Time":"5hrs",
+				"Cost":"400$",
+				"Date & Time":this._getDateHtml(),
+				"Book":this._getIncidentHtml()
+			}
+			]
+		  var rows=[];
+		  console.log("length",data.length)
+		 
+		  for(i=0;i<data.length;i++)
+		  
+			  rows.push(data[i]);
+		  console.log("*******************",rows)
+		  this.mydata=rows;
+		  console.log("*******************dat",this.mydata)
+		// document.getElementById("mytable")
+		//this.startLocation=document.getElementById("pi");
+		 
+	  },
+		
+	     onRowClick:function(e) {
+//		var checkBox=document.getElementById("mytable");
+//			 checkBox.checked = false;
+			 
+			 /*
+			 checkBox.onchange = function doruc() {
+        e.style.display = this.checked ? 'block' : 'none';
+       };
+    		 checkBox.onchange();*/	
+			 var clickedRow = e.detail.row;
+			 this.destination=clickedRow.row.Location.value;
+			this.stLoc=document.getElementById("pi").value;
+			// this.stLoc=document.getElementById("pi");
+			 console.log("location",this.a);
+			 /*console.log("destination",destination);
+			 console.log("Row clicked: ", clickedRow);*/
+			 //console.log("Row clicked: ", clickedRow.row.Location);
+      },
+ 		
+		_getIncidentHtml: function(index){
+                    
+ 					return '<px-modal btn-modal-positive="Submit" btn-modal-negative="Cancel" modal-heading="Confirm Booking"><paper-button raised class="btn btn--primary modal-trigger">Book</paper-button><p>This will book your confirmation for the appointment.Condition may vary on your arrival.</p></px-modal>'
+      /*'<paper-button id="btn1"  raised >BOOK</paper-button>'*/
+		},
+	 
+		_getDateHtml: function(index){
+                    
+                    return '<px-datetime-picker show-buttons="true" block-past-dates="true" date-format="YYYY/MM/DD" time-format="hh:mm A" time-zone="UTC" show-time-zone="abbreviatedText" date-time="2017-08-09T05:30:00.000Z"></px-datetime-picker>'
+        } 
+	});
+	
+		
+	</script>
+</dom-module>
